@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
+
+  <appender name="debug-out" class="org.apache.log4j.DailyRollingFileAppender">
+    <param name="File" value="logs/debug.log" />
+    <!-- <param name="MaxFileSize" value="1024KB"/>
+    <param name="MaxBackupIndex" value="5"/> -->
+    <layout class="org.apache.log4j.PatternLayout">
+      <param name="ConversionPattern" value="%d{yyyy.MM.dd HH:mm:ss,SSS} %c - %m%n" />
+
+    </layout>
+    <filter class="org.apache.log4j.varia.LevelRangeFilter">
+      <param name="LevelMax" value="debug" />
+      <!-- <param name="LevelMin" value="debug" /> --><!-- 如果不写则为all -->
+      <param name="AcceptOnMatch" value="true" />
+    </filter>
+  </appender>
+
+  <appender name="info-out" class="org.apache.log4j.DailyRollingFileAppender">
+    <param name="File" value="logs/info.log" />
+    <!-- <param name="MaxFileSize" value="1024KB"/>
+    <param name="MaxBackupIndex" value="5"/>-->
+    <layout class="org.apache.log4j.PatternLayout">
+      <param name="ConversionPattern" value="%d{yyyy.MM.dd HH:mm:ss,SSS} %c - %m%n" />
+    </layout>
+    <filter class="org.apache.log4j.varia.LevelRangeFilter">
+      <param name="LevelMax" value="info" />
+      <param name="LevelMin" value="info" />
+      <param name="AcceptOnMatch" value="true" />
+    </filter>
+  </appender>
+
+  <appender name="warn-out" class="org.apache.log4j.DailyRollingFileAppender">
+    <param name="File" value="logs/warn.log" />
+    <!-- <param name="MaxFileSize" value="1024KB"/>
+    <param name="MaxBackupIndex" value="5"/>-->
+    <layout class="org.apache.log4j.PatternLayout">
+      <param name="ConversionPattern" value="%d{yyyy.MM.dd HH:mm:ss,SSS} %c - %m%n" />
+    </layout>
+    <filter class="org.apache.log4j.varia.LevelRangeFilter">
+      <param name="LevelMax" value="warn" />
+      <param name="LevelMin" value="warn" />
+      <param name="AcceptOnMatch" value="true" />
+    </filter>
+  </appender>
+
+  <appender name="error-out" class="org.apache.log4j.DailyRollingFileAppender">
+    <param name="File" value="logs/error.log" />
+    <!-- <param name="MaxFileSize" value="1024KB"/>
+    <param name="MaxBackupIndex" value="5"/>-->
+    <layout class="org.apache.log4j.PatternLayout">
+      <param name="ConversionPattern" value="%d{yyyy.MM.dd HH:mm:ss,SSS} %c - %m%n" />
+    </layout>
+    <filter class="org.apache.log4j.varia.LevelRangeFilter">
+      <param name="LevelMin" value="error" />
+      <param name="AcceptOnMatch" value="true" />
+    </filter>
+  </appender>
+
+<appender name="debug-console-out" class="org.apache.log4j.ConsoleAppender">
+    <layout class="org.apache.log4j.PatternLayout">
+      <param name="ConversionPattern" value="%d{yyyy.MM.dd HH:mm:ss,SSS} %c - %m%n" />
+    </layout>
+    <filter class="org.apache.log4j.varia.LevelRangeFilter">
+      <param name="LevelMax" value="debug" />
+      <!-- <param name="LevelMin" value="debug" /> --><!-- 如果不写则为all -->
+      <param name="AcceptOnMatch" value="true" />
+    </filter>
+  </appender>
+
+  <appender name="info-console-out" class="org.apache.log4j.ConsoleAppender">
+    <layout class="org.apache.log4j.PatternLayout">
+      <!-- <param name="ConversionPattern" value="[%d{yyyy.MM.dd HH:mm:ss,SSS}] [ %c ] - %m%n" /> -->
+      <param name="ConversionPattern" value="[ %d{yyyy.MM.dd HH:mm:ss,SSS} ] %c [ %p ] [%t:%r] - %m%n" />
+    </layout>
+    <filter class="org.apache.log4j.varia.LevelRangeFilter">
+      <param name="LevelMax" value="info" />
+      <param name="LevelMin" value="info" />
+      <param name="AcceptOnMatch" value="true" />
+    </filter>
+  </appender>
+
+  <appender name="warn-console-out" class="org.apache.log4j.ConsoleAppender">
+    <layout class="org.apache.log4j.PatternLayout">
+      <param name="ConversionPattern" value="%d{yyyy.MM.dd HH:mm:ss,SSS} %c - %m%n" />
+    </layout>
+    <filter class="org.apache.log4j.varia.LevelRangeFilter">
+      <param name="LevelMax" value="warn" />
+      <param name="LevelMin" value="warn" />
+      <param name="AcceptOnMatch" value="true" />
+    </filter>
+  </appender>
+   <appender name="error-console-out" class="org.apache.log4j.ConsoleAppender">
+    <layout class="org.apache.log4j.PatternLayout">
+      <param name="ConversionPattern" value="%d{yyyy.MM.dd HH:mm:ss,SSS} %c - %m%n" />
+    </layout>
+    <filter class="org.apache.log4j.varia.LevelRangeFilter">
+      <param name="LevelMax" value="error" />
+      <param name="LevelMin" value="error" />
+      <param name="AcceptOnMatch" value="true" />
+    </filter>
+  </appender>
+
+
+  <!-- OF-506: Jetty INFO messages are generally not useful. Ignore them by default. -->
+  <logger name="org.eclipse.jetty">
+    <level value="warn" />
+  </logger>
+
+
+
+
+
+  <root>
+    <level value="debug" />
+    <!-- <appender-ref ref="debug-out" />
+    <appender-ref ref="info-out" />
+    <appender-ref ref="warn-out" />
+    <appender-ref ref="error-out" /> -->
+
+     <appender-ref ref="debug-console-out"/>
+     <appender-ref ref="info-console-out"/>
+     <appender-ref ref="warn-console-out"/>
+     <appender-ref ref="error-console-out"/>
+  </root>
+
+</log4j:configuration>
