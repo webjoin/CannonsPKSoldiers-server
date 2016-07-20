@@ -5,18 +5,20 @@ import javax.websocket.Session;
 public class User{
 	int prole ; // 1 soldier  2 cannon  player's role .
 	String uuid;  
-	int status ; // 0 waiting , 1 playing
+	int status ; // 1 ok , 2 playing 3 end 
 	int type ;  // the type of the chess. 
 	String otherUuid;
 	transient Session session;
-	boolean myWin ;
+	int whoWin ;
 	int turn ;
 	
-public boolean myWin() {
-		return myWin;
+	
+
+	public int getWhoWin() {
+		return whoWin;
 	}
-	public void setWin(boolean myWin) {
-		this.myWin = myWin;
+	public void setWhoWin(int whoWin) {
+		this.whoWin = whoWin;
 	}
 	public int getTurn() {
 		return turn;

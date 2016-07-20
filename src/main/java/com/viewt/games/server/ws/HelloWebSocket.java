@@ -58,16 +58,28 @@ public class HelloWebSocket {
 			int oy = o.getIntValue("oy");
 			int nx = o.getIntValue("nx");
 			int ny = o.getIntValue("ny");
+			int turn = o.getIntValue("turn");
+			int status = o.getIntValue("status");
+			int whoWin = o.getIntValue("whoWin");
+
 			String uuid = o.getString("uuid");     //sender 
 			String otherUuid = o.getString("otherUuid");
 			User sender = userMap.get(uuid);      //sender 
 			User receiver = userMap.get(otherUuid); //receiver
+			sender.setTurn(turn);
 			sender.setOx(ox);
 			sender.setOy(oy);
 			sender.setNx(nx);
 			sender.setNy(ny);
-			sender.setStatus(2);
-			receiver.getSession().getBasicRemote().sendText(JSON.toJSONString(sender).toString());
+			if (status == 0 ) {
+				sender.setStatus(1);				
+			}else {
+				sender.setStatus(status);
+			}
+			sender.setWhoWin(whoWin);
+			String txt = JSON.toJSONString(sender).toString();
+			System.out.println("onMessage----->"+txt);
+			receiver.getSession().getBasicRemote().sendText(txt);
 			
 		
     }
@@ -84,26 +96,32 @@ public class HelloWebSocket {
 			User u = new User();
 			u.setUuid(uuid);
 			u.setProle(1); //1 soldier  2 cannon  player's role .
+			u.setTurn(1);//   prole == turn whose turn .
 			System.out.println(JSON.toJSON(u));
 			u.setSession(session);
-			session.getBasicRemote().sendText(JSON.toJSONString(u).toString());
+//			session.getBasicRemote().sendText(JSON.toJSONString(u).toString());
 			userMap.put(uuid, u);
 //			userFreeMap.put(uuid, u);
 			userFreeList.add(uuid);
 			userMap1.put(session,uuid);
 			if (userFreeList.size() % 2 == 0) {
-				String u2 = userFreeList.get(userFreeList.size()-2);  //
+				String u2 = userFreeList.get(userFreeList.size()-2);  //last-1
 				String u1 = userFreeList.get(userFreeList.size()-1);  //last
 				User user1 = userMap.get(u1);
 				User user2 = userMap.get(u2);
+				
+				if (user2.getProle() == 2) {  //if it is a soldier .
+					user1.setProle(1);  //  // 1 soldier  2 cannon  player's role .
+				}else {
+					user1.setProle(2);  //  
+				}
+				
 				user1.setStatus(1); // playing
 				user2.setStatus(1);  // playing
-				user1.setProle(2);  //  // 1 soldier  2 cannon  player's role .
-				user1.setTurn(1);//   prole == turn whose turn .
-				user2.setTurn(1);//
+				
 				user1.setOtherUuid(u2);
 				user2.setOtherUuid(u1);
-				session.getBasicRemote().sendText(JSON.toJSONString(user1).toString());  // send a message to uuid1
+				user1.getSession().getBasicRemote().sendText(JSON.toJSONString(user1).toString());  // send a message to uuid1
 				user2.getSession().getBasicRemote().sendText(JSON.toJSONString(user2).toString()); //send a message to uuid2
 				System.out.println(user2);
 			}
